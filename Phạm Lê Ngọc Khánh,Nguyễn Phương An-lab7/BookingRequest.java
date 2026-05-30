@@ -16,6 +16,7 @@ public class BookingRequest {
     private String purpose;
     private BookingStatus status;
     private ArrayList<BookingStatus> statusHistory = new ArrayList<>();
+    private BookingState currentState;
     public BookingRequest(String bookingCode, User requester, Room room, LocalDate date, LocalTime startTime, LocalTime endTime, String purpose, BookingStatus status) throws CampusResourceException{
         this.bookingCode = bookingCode;
         this.requester = requester;
@@ -42,6 +43,7 @@ public class BookingRequest {
         this.purpose = purpose;
         this.status = BookingStatus.PENDING;
         this.statusHistory.add(BookingStatus.PENDING); 
+        this.currentState = new PendingBookingState();
 
     }
 
@@ -49,6 +51,8 @@ public class BookingRequest {
         DayOfWeek day = date.getDayOfWeek();
         return day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY;
     }
+
+    public static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH:mm");
 
     // public static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -156,33 +160,33 @@ public class BookingRequest {
     this.statusHistory.add(next);
     }
 
-    public void approve() throws CampusResourceException {
-        if (status != BookingStatus.PENDING) {
-            throw new CampusResourceException("Only PENDING bookings can be approved");
-        }
-        this.status = BookingStatus.APPROVED;
-    }
-
-    public void cancel() throws CampusResourceException {
-        if (status == BookingStatus.COMPLETED || status == BookingStatus.CANCELLED) {
-            throw new CampusResourceException("Cannot cancel a " + status + " booking");
-        }
-        this.status = BookingStatus.CANCELLED;
-    }
-
-    public void reject() throws CampusResourceException {
-        if (status != BookingStatus.PENDING) {
-            throw new CampusResourceException("Only PENDING bookings can be rejected");
-        }
-        this.status = BookingStatus.REJECTED;
-    }
-
     public void rejectOverlappingBooking(Room room, BookingStatus next){
-        if(next == BookingStatus.PENDING){
-            if(!room.isAvailable()){
+        if(!room.isAvailable() && next == BookingStatus.APPROVED){
                 throw new CampusResourceException("Overlapping booking request is not allowed!");
         }
-            }
-        status = BookingStatus.REJECTED;
+    }
+
+    public void approve(){
+        currentState.approve(this);
+    }
+
+    public void reject(){
+        currentState.reject(this);
+    }
+
+    public void cancel(){
+        currentState.cancel(this);
+    }
+
+    public void complete(){
+        currentState.complete(this);
+    }
+
+    public void setState(BookingState newState){
+        this.currentState = newState;
+    }
+
+    public String getStateName(){
+        return currentState.getStateName();
     }
 }
