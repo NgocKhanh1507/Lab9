@@ -155,33 +155,33 @@ public class CampusResourceSystem implements BookingService{
     //     return loans.get(code);
     // }
 
-    // public void printAllUsers(){
-    //     for (User user : users){
-    //         System.out.println("\n=== USERS ===");
-    //         System.out.println(user);
-    //     }
-    // }
+    public void printAllUsers(){
+        for (User user : users){
+            System.out.println("\n=== USERS ===");
+            System.out.println(user);
+        }
+    }
 
-    // public void printAllResources(){
-    //     for (Resource resource : resources){
-    //         System.out.println("\n=== RESOUCES ===");
-    //         System.out.println(resource);
-    //     }
-    // }
+    public void printAllResources(){
+        for (Resource resource : resources){
+            System.out.println("\n=== RESOUCES ===");
+            System.out.println(resource);
+        }
+    }
 
-    // public void printAllBookings(){
-    //     for (BookingRequest book : bookings.values()){
-    //         System.out.println("\n=== BOOKINGS ===");
-    //         System.out.println(book);
-    //     }
-    // }
+    public void printAllBookings(){
+        for (BookingRequest book : bookings.values()){
+            System.out.println("\n=== BOOKINGS ===");
+            System.out.println(book);
+        }
+    }
 
-    // public void printAllLoans(){
-    //     for (LoanRecord loan : loans.values()){
-    //         System.out.println("\n=== LOANS ===");
-    //         System.out.println(loan);
-    //     }
-    // }
+    public void printAllLoans(){
+        for (LoanRecord loan : loans.values()){
+            System.out.println("\n=== LOANS ===");
+            System.out.println(loan);
+        }
+    }
 
     // @Override
     // public String toString(){

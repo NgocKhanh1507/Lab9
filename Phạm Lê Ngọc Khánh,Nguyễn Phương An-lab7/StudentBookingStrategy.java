@@ -1,4 +1,3 @@
-import java.time.LocalTime;
 public class StudentBookingStrategy implements BookingApprovalStrategy{
     private final int START_HOUR = 7, END_HOUR = 18;
     private String decisionMessage;

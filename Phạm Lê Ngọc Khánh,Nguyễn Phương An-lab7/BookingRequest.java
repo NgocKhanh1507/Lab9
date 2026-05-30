@@ -126,7 +126,7 @@ public class BookingRequest {
 
     @Override
     public String toString(){
-        return "BookingRequest{" +
+        return "\nBookingRequest{" +
         "code='" + bookingCode + "'" +
         ", requester=" + requester.getName() +
         ", room=" + getRoom() +

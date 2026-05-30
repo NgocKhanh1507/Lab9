@@ -9,7 +9,7 @@ String info2){
 
         case "Equipment":
             int quantity = Integer.parseInt(info2);
-            return new Equipment(resourceId, resourceName, isAvailable, info2, quantity);
+            return new Equipment(resourceId, resourceName, isAvailable, info1, quantity);
 
         default:
             throw new CampusResourceException("Unknown resource type");
