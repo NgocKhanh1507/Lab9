@@ -3,8 +3,8 @@ public class UserFactory{
         String name, String info1, String info2) {
     // switch(userType){
     //     case "Student":
-    //         int year = Integer.parseInt(info2);
-    //         return new StudentUser(userId, email, name, info1, year);
+    //        int year = Integer.parseInt(info2);
+    //         return new StudentUser(userId, email, name, info1, int year);
     //     case "Staff":
     //         return new StaffUser(userId, email, name, info1, info2);
 
