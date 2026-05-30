@@ -10,7 +10,7 @@ public class StudentBookingStrategy implements BookingApprovalStrategy{
             return false;
         }
 
-        if(system.hasOverdueLoans()){
+        if(system.hasOverdueLoans(request.getRequester().getUserId())){
             decisionMessage = "Student has overdue loan! Please return them before making a new booking.";
             return false;
         }

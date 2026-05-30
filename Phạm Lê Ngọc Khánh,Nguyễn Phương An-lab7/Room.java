@@ -56,7 +56,7 @@ public  class Room extends Resource {
 
     @Override
     public String toString(){
-        return "Room:" + super.toString() + ",Capacity:" + capacity + ",Building Name:"+ buildingName  ;
+        return "\nRoom:" + super.toString() + ",Capacity:" + capacity + ",Building Name:"+ buildingName  ;
     }
 
     public void addRequests(BookingRequest request){

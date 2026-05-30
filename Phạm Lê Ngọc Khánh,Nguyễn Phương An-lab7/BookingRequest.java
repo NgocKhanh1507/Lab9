@@ -80,6 +80,10 @@ public class BookingRequest {
         return status;
     }
 
+    public void setStatus(BookingStatus status){
+        this.status = status;
+    }
+
     public boolean isCompleted(){
         return status == BookingStatus.COMPLETED;
     }
@@ -122,7 +126,7 @@ public class BookingRequest {
 
     @Override
     public String toString(){
-        return "BookingRequest{" +
+        return "\nBookingRequest{" +
         "code='" + bookingCode + "'" +
         ", requester=" + requester.getName() +
         ", room=" + getRoom() +

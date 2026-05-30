@@ -2,7 +2,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
 
-public class TestProblem5 {
+public class TestPart5 {
     public static void main (String[] args){
         User student = new StudentUser("N0202", "nhat@gmail.com", "Nhat", "DS", 1);
         User staff   = new StaffUser("T2403", "tien@gmail.com", "Tien", "CS", "Lecturer");
