@@ -151,151 +151,111 @@ public class CampusResourceSystem implements BookingService{
         return bookings.get(code);
     }
 
-    public LoanRecord findLoanByCode(String code){
-        return loans.get(code);
-    }
+    // public LoanRecord findLoanByCode(String code){
+    //     return loans.get(code);
+    // }
 
-    public int countStudents(){
-        int count = 0;
-        for (User user : users){
-            if (user instanceof StudentUser){
-                count++;
-            }
-        }
-        return count;
-    }
+    // public void printAllUsers(){
+    //     for (User user : users){
+    //         System.out.println("\n=== USERS ===");
+    //         System.out.println(user);
+    //     }
+    // }
 
-    public int countStaff(){
-        int count = 0;
-        for (User user : users){
-            if (user instanceof StaffUser){
-                count++;
-            }
-        }
-        return count;
-    }
+    // public void printAllResources(){
+    //     for (Resource resource : resources){
+    //         System.out.println("\n=== RESOUCES ===");
+    //         System.out.println(resource);
+    //     }
+    // }
 
-    public int countRooms(){
-        int count = 0;
-        for (Resource resource : resources){
-            if (resource instanceof Room){
-                count++;
-            }
-        }
-        return count;
-    }
+    // public void printAllBookings(){
+    //     for (BookingRequest book : bookings.values()){
+    //         System.out.println("\n=== BOOKINGS ===");
+    //         System.out.println(book);
+    //     }
+    // }
 
-    public int countEquipment(){
-        int count = 0;
-        for (Resource resource : resources){
-            if (resource instanceof Equipment){
-                count++;
-            }
-        }
-        return count;
-    }
+    // public void printAllLoans(){
+    //     for (LoanRecord loan : loans.values()){
+    //         System.out.println("\n=== LOANS ===");
+    //         System.out.println(loan);
+    //     }
+    // }
 
-    public void printAllUsers(){
-        for (User user : users){
-            System.out.println("\n=== USERS ===");
-            System.out.println(user);
-        }
-    }
+    // @Override
+    // public String toString(){
+    //     return "====" + systemName + "===\n" +
+    //     "Users: " +users.size() +
+    //     "(Student: " + countStudents() + 
+    //     ", Staff: " + countStaff() + ")\n" +
+    //     "Resources: " + resources.size() + 
+    //     "(Rooms: " + countRooms() + 
+    //     ", Equipment: " + countEquipment() + ")\n" +
+    //     "Bookings: " + bookings.size() + "\n" +
+    //     "Loans: " + loans.size();
+    // }
 
-    public void printAllResources(){
-        for (Resource resource : resources){
-            System.out.println("\n=== RESOUCES ===");
-            System.out.println(resource);
-        }
-    }
+    // public Resource searchResourcesByType(){
+    //     for (Resource r : resources){
+    //         if (r instanceof Room){
+    //             System.out.println(r.getResourceId() + "is " + r.getResourceType());
+    //         }
+    //         if (r instanceof Equipment){
+    //             System.out.println(r.getResourceId() + "is " + r.getResourceType());
+    //         }
+    //     }
+    //     return null;
+    // }
 
-    public void printAllBookings(){
-        for (BookingRequest book : bookings.values()){
-            System.out.println("\n=== BOOKINGS ===");
-            System.out.println(book);
-        }
-    }
+    // public User searchByNameKeyword(String name){
+    //     for (User keyname : users){
+    //         if (keyname.getName().equalsIgnoreCase(name)){
+    //             System.out.println(keyname);
+    //         }
+    //     }
+    //     return null;
+    // }
 
-    public void printAllLoans(){
-        for (LoanRecord loan : loans.values()){
-            System.out.println("\n=== LOANS ===");
-            System.out.println(loan);
-        }
-    }
-
-    @Override
-    public String toString(){
-        return "====" + systemName + "===\n" +
-        "Users: " +users.size() +
-        "(Student: " + countStudents() + 
-        ", Staff: " + countStaff() + ")\n" +
-        "Resources: " + resources.size() + 
-        "(Rooms: " + countRooms() + 
-        ", Equipment: " + countEquipment() + ")\n" +
-        "Bookings: " + bookings.size() + "\n" +
-        "Loans: " + loans.size();
-    }
-
-    public Resource searchResourcesByType(){
-        for (Resource r : resources){
-            if (r instanceof Room){
-                System.out.println(r.getResourceId() + "is " + r.getResourceType());
-            }
-            if (r instanceof Equipment){
-                System.out.println(r.getResourceId() + "is " + r.getResourceType());
-            }
-        }
-        return null;
-    }
-
-    public User searchByNameKeyword(String name){
-        for (User keyname : users){
-            if (keyname.getName().equalsIgnoreCase(name)){
-                System.out.println(keyname);
-            }
-        }
-        return null;
-    }
-
-    public void bookingCount(){
-        HashMap<String, Integer> count = new HashMap<>();
-        for (BookingRequest booking : bookings.values()){
-            if (booking.getRoom().getResourceId() != null && booking.getStatus() == BookingStatus.APPROVED){
-                String roomId = booking.getRoom().getResourceId();
-                count.put(roomId, count.getOrDefault(roomId, 0) + 1);
-            }
-        }
-        for (String roomId : count.keySet()) {
-            System.out.println("Room " + roomId + ": " + count.get(roomId) + " approved booking(s)");
-        }
-    }
+//     public void bookingCount(){
+//         HashMap<String, Integer> count = new HashMap<>();
+//         for (BookingRequest booking : bookings.values()){
+//             if (booking.getRoom().getResourceId() != null && booking.getStatus() == BookingStatus.APPROVED){
+//                 String roomId = booking.getRoom().getResourceId();
+//                 count.put(roomId, count.getOrDefault(roomId, 0) + 1);
+//             }
+//         }
+//         for (String roomId : count.keySet()) {
+//             System.out.println("Room " + roomId + ": " + count.get(roomId) + " approved booking(s)");
+//         }
+//     }
     
-    public User mostRecordUser(){
-        HashMap<String, Integer> loanCount = new HashMap<>();
-        for (LoanRecord record : loans.values()){
-            String user = record.getBorrower().getUserId(); 
-            if (loanCount.containsKey(user)){
-                loanCount.put(user, loanCount.get(user) + 1);
-            } else {
-                loanCount.put(user, 1);
-            }
-        }
-        System.out.println("Loan count map: " + loanCount);
+//     public User mostRecordUser(){
+//         HashMap<String, Integer> loanCount = new HashMap<>();
+//         for (LoanRecord record : loans.values()){
+//             String user = record.getBorrower().getUserId(); 
+//             if (loanCount.containsKey(user)){
+//                 loanCount.put(user, loanCount.get(user) + 1);
+//             } else {
+//                 loanCount.put(user, 1);
+//             }
+//         }
+//         System.out.println("Loan count map: " + loanCount);
 
-        String topUser = null;
-        int maxLoanRecords = 0;
-        for (String userId : loanCount.keySet()) {
-            if (loanCount.get(userId) > maxLoanRecords) {
-                maxLoanRecords = loanCount.get(userId);
-                topUser = userId;
-            }
-        }
-        System.out.println("Top user ID: " + topUser);
-        if (topUser == null) {return null;}
-        User result = findUserById(topUser);
-        System.out.println("Found user: " + result);
-        return result;
-   }
+//         String topUser = null;
+//         int maxLoanRecords = 0;
+//         for (String userId : loanCount.keySet()) {
+//             if (loanCount.get(userId) > maxLoanRecords) {
+//                 maxLoanRecords = loanCount.get(userId);
+//                 topUser = userId;
+//             }
+//         }
+//         System.out.println("Top user ID: " + topUser);
+//         if (topUser == null) {return null;}
+//         User result = findUserById(topUser);
+//         System.out.println("Found user: " + result);
+//         return result;
+//    }
     
    public void cancelBooking(String bookingCode) throws CampusResourceException {
         BookingRequest booking = findBookingByCode(bookingCode);
@@ -336,29 +296,29 @@ public class CampusResourceSystem implements BookingService{
         }
     }
 
-    public void printAllApprovedBookings(){
-        for ( BookingRequest bk : bookings.values()){
-            if(bk.getStatus() == BookingStatus.APPROVED){
-                System.out.println(bk.toString());
-            }
-        }
-    }
+    // public void printAllApprovedBookings(){
+    //     for ( BookingRequest bk : bookings.values()){
+    //         if(bk.getStatus() == BookingStatus.APPROVED){
+    //             System.out.println(bk.toString());
+    //         }
+    //     }
+    // }
 
-    public void printAllPendingBookings(){
-        for ( BookingRequest bk : bookings.values()){
-            if(bk.getStatus() == BookingStatus.PENDING){
-                System.out.println(bk.toString());
-            }
-        }
-    }
+    // public void printAllPendingBookings(){
+    //     for ( BookingRequest bk : bookings.values()){
+    //         if(bk.getStatus() == BookingStatus.PENDING){
+    //             System.out.println(bk.toString());
+    //         }
+    //     }
+    // }
 
-    public void printAllActiveLoan(){
-        for ( LoanRecord s : loans.values()){
-            if( s.getStatus() == LoanStatus.BORROWED || s.getStatus() == LoanStatus.OVERDUE ){
-                System.out.println(s.toString());
-            }
-        }
-    }
+    // public void printAllActiveLoan(){
+    //     for ( LoanRecord s : loans.values()){
+    //         if( s.getStatus() == LoanStatus.BORROWED || s.getStatus() == LoanStatus.OVERDUE ){
+    //             System.out.println(s.toString());
+    //         }
+    //     }
+    // }
 
     public boolean hasOverdueLoans(String userId){
         ArrayList<String> overdueLoan = new ArrayList<>();

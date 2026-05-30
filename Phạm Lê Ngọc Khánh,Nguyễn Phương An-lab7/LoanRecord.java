@@ -136,26 +136,26 @@ public class LoanRecord {
         "}";
     }
 
-    Queue<LoanRecord> waitingRecords = new LinkedList<>();
-    public void addLoanRecord(LoanRecord record){
-        waitingRecords.offer(record);
-        System.out.println(record.getBorrower().getUserId() + "added to waiting list.");
-    }
+    // Queue<LoanRecord> waitingRecords = new LinkedList<>();
+    // public void addLoanRecord(LoanRecord record){
+    //     waitingRecords.offer(record);
+    //     System.out.println(record.getBorrower().getUserId() + "added to waiting list.");
+    // }
 
-    public LoanRecord nextInQueue(){
-        if (waitingRecords.isEmpty()){
-           return null;
-        }
-        return waitingRecords.poll();
-    }
+    // public LoanRecord nextInQueue(){
+    //     if (waitingRecords.isEmpty()){
+    //        return null;
+    //     }
+    //     return waitingRecords.poll();
+    // }
 
-    public void printRecordQueue(){
-        if (waitingRecords.isEmpty()){
-            System.out.println("No loan record is waiting.");
-            return;
-        }
-        for (LoanRecord r : waitingRecords){
-            System.out.println(r.getLoanCode());
-        }
-    }
+    // public void printRecordQueue(){
+    //     if (waitingRecords.isEmpty()){
+    //         System.out.println("No loan record is waiting.");
+    //         return;
+    //     }
+    //     for (LoanRecord r : waitingRecords){
+    //         System.out.println(r.getLoanCode());
+    //     }
+    // }
 }
