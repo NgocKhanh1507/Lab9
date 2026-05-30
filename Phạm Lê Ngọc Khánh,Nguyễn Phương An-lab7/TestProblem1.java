@@ -7,11 +7,11 @@ public class TestProblem1 {
         User s1 =  UserFactory.createUser("TTIU0505","TTIU0505@gmail.com" , "Thien", "CSE", "lecturer");
         User s2 =  UserFactory.createUser("sosIU0505","sosIU0505@gmail.com" , "Son", "CSE", "lecturer");
 
-        Resource r1 = new Room("R001", "lab", true, 100, "A1");
-        Resource r2 = new Room("R002", "OOP", true, 100, "A2");
+        Resource r1 = ResourceFactory.createResource("Room","R001", "lab", true, "100", "A1");
+        Resource r2 = ResourceFactory.createResource("Room","R002", "OOP", true, "100", "A2");
 
-        Equipment e1 = new Equipment("E001","Projector",true,"Technology",10);
-        Equipment e2 = new Equipment("E002","Computer",true, "Technology",50);
+        Resource e1 = ResourceFactory.createResource("Equipment","E001","Projector",true,"Technology","10");
+        Resource e2 = ResourceFactory.createResource("Equipment","E002","Computer",true, "Technology","50");
 
         System.out.println(su1.getUserType());
         System.out.println(su2.getUserType());

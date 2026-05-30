@@ -76,6 +76,10 @@ public class BookingRequest {
         return status;
     }
 
+    public void setStatus(BookingStatus status){
+        this.status = status;
+    }
+
     public boolean isCompleted(){
         return status == BookingStatus.COMPLETED;
     }

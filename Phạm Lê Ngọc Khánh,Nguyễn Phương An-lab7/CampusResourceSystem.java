@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.time.LocalTime;
 
-public class CampusResourceSystem implements BookingService, CampusEventObserver{
+public class CampusResourceSystem implements BookingApprovalStrategy,BookingService, CampusEventObserver{
     private String systemName;
     ArrayList<User> users;
     ArrayList<Resource> resources;
@@ -44,12 +44,41 @@ public class CampusResourceSystem implements BookingService, CampusEventObserver
         }
     }
 
-    private List<BookingService> observers = new ArrayList<>();
-    @Override
-    public void update(String eventType, String message){
-        
+    //business logic
+    public void approveBooking(BookingRequest request, User user){
+        BookingApprovalStrategy bs = resolveStrategy(user);
+        if (bs.canApprove(request, this)) {
+            confirmBooking(request);
+            notifyObservers("BOOKING_APPROVED",
+                "Room " + request.getBookingCode() + " booked by " + user.getName());
+        } else {
+            notifyObservers("BOOKING_REJECTED",
+                "Rejected for " + user.getName() + ": " + bs.getDecisionMessage());
+        }
     }
 
+    private BookingApprovalStrategy resolveStrategy(User user) {
+        return switch (user.getUserType()) {
+            case "Student" -> new StudentBookingStrategy();
+            case "Staff"   -> new StaffBookingStrategy();
+            default      -> new DefaultBookingStrategy();
+        };
+    }
+
+    public void rejectBooking(BookingRequest request, User user){
+        Room room = request.getRoom();
+        BookingStatus next = request.getStatus();
+        request.rejectOverlappingBooking(room, next);
+        notifyObservers("BOOKING_REJECTED",
+            "Room" + request.getRoom().getResourceId() + " rejected by" + user.getName());
+    }
+    
+    public void cancelBooking(BookingRequest request, User user) {
+        cancelBooking(request.getBookingCode());
+        notifyObservers("BOOKING_CANCELLED",
+            "Room " + request.getRoom().getResourceId() + " cancelled by " + user.getName());
+    }
+    
     public void addUser(User u){
         if (u == null){
             throw new CampusResourceException("Cannot null user!");
@@ -268,8 +297,7 @@ public class CampusResourceSystem implements BookingService, CampusEventObserver
         return result;
    }
     
-
-    public void cancelBooking(String bookingCode) throws CampusResourceException {
+   public void cancelBooking(String bookingCode) throws CampusResourceException {
         BookingRequest booking = findBookingByCode(bookingCode);
         booking.cancel();
 
@@ -346,7 +374,7 @@ public class CampusResourceSystem implements BookingService, CampusEventObserver
 
     public boolean hasOverlappingBooking(BookingRequest request) {
         List<BookingRequest> roomBookings = approvedBookings
-                .getOrDefault(request.getBookingCode(), new ArrayList<>());
+                .getOrDefault(request.getRoom().getResourceId(), new ArrayList<>());
 
         for (BookingRequest existing : roomBookings) {
             // Cùng ngày mới cần check giờ
@@ -359,6 +387,13 @@ public class CampusResourceSystem implements BookingService, CampusEventObserver
             if (overlap) return true;
         }
         return false;
+    }
+
+    public void confirmBooking(BookingRequest request){
+        request.setStatus(BookingStatus.APPROVED);
+
+        String roomId = request.getRoom().getResourceId();
+        approvedBookings.computeIfAbsent(roomId, n -> new ArrayList<>()).add(request);
     }
 
 }
