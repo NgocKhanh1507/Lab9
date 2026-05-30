@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
-public class Lab9Demo {
+public class Lab9demo {
     public static void main(String[] args){
         System.out.println("=== Final Demo Scenarios ===\n");
 
