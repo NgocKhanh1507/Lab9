@@ -1,6 +1,3 @@
-import java.util.PriorityQueue;
-import java.util.Comparator;
-
 public class StaffBookingStrategy implements BookingApprovalStrategy{
     private String decisionMessage; 
  
@@ -26,7 +23,7 @@ system){
 public String getDecisionMessage(){
     return decisionMessage;
 }
-    
+
 
 }
    

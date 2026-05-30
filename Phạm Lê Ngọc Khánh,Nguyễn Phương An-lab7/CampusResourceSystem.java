@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.time.LocalTime;
 
-public class CampusResourceSystem implements BookingApprovalStrategy,BookingService, CampusEventObserver{
+public class CampusResourceSystem implements BookingService{
     private String systemName;
     ArrayList<User> users;
     ArrayList<Resource> resources;
@@ -50,7 +50,7 @@ public class CampusResourceSystem implements BookingApprovalStrategy,BookingServ
         if (bs.canApprove(request, this)) {
             confirmBooking(request);
             notifyObservers("BOOKING_APPROVED",
-                "Room " + request.getBookingCode() + " booked by " + user.getName());
+                "Room " + request.getRoom().getResourceId() + " booked by " + user.getName());
         } else {
             notifyObservers("BOOKING_REJECTED",
                 "Rejected for " + user.getName() + ": " + bs.getDecisionMessage());
@@ -354,15 +354,17 @@ public class CampusResourceSystem implements BookingApprovalStrategy,BookingServ
 
     public void printAllActiveLoan(){
         for ( LoanRecord s : loans.values()){
-            if( s.getStatus() == LoanStatus.BORROWED || s.getStatus() == LoanStatus.OVERDUE );
-            System.out.println(s.toString());
+            if( s.getStatus() == LoanStatus.BORROWED || s.getStatus() == LoanStatus.OVERDUE ){
+                System.out.println(s.toString());
+            }
         }
     }
 
-    public boolean hasOverdueLoans(){
+    public boolean hasOverdueLoans(String userId){
         ArrayList<String> overdueLoan = new ArrayList<>();
         for (Map.Entry<String,LoanRecord> entry : loans.entrySet()){
-            if (entry.getValue().getStatus() == LoanStatus.OVERDUE){
+            LoanRecord loan = entry.getValue();
+            if (loan.getBorrower().getUserId().equals(userId) && loan.getStatus() == LoanStatus.OVERDUE){
                 overdueLoan.add(entry.getKey());
                 return true;
             }
